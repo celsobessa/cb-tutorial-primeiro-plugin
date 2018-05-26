@@ -133,45 +133,46 @@ if ( ! is_admin() ) {
 	/**
 	 * Adiciona um iframe com o mapa japu ao final do conteúdo.
 	 *
-	 * Adiciona um iframe com o mapa japu ao final do conteúdo de posts and pages
+	 * Adiciona um iframe com o mapa japu ao final do conteúdo de posts and pages. Adaptado do
+	 * plugin oficial do Japu (veja https://github.com/2aces/japu-map-embedder/).
 	 *
 	 * @since 0.1.0
 	 * @param string $content O conteúdo do post.
 	 * @return string $content O conteúdo do post, filtrado, com o iframe ao final.
 	 */
 	function cbtpl_add_japu_map( $content ) {
-		global $post;
 
-		// se o tipo de post não for post ou page, retorna $content sem modificar e sai da função.
-		if ( 'post' !== $post->post_type && 'page' !== $post->post_type ) {
+		// se não estivermos em post ou page, retorna $content sem modificar e sai da função.
+		if ( ! is_single() && ! is_page() ) {
 			return $content;
 		}
+		global $post;
 
-		// cria uma string $markup para o html gerado
+		// cria uma string $markup para o html gerado.
 		$markup = '<div class="japumap-wrapper">';
 		$markup .= '<iframe src="https://embed.japuapp.com.br/" sandbox="allow-same-origin allow-scripts allow-forms" style="border:none;" class="japumap-iframe"></iframe>';
 		$markup .= '<div class="japumap-bottom-bar">';
 		$markup .= '<p class="japumap-credits">';
 		$markup .= 'fonte: <a href="https://www.japuapp.com.br">Japu - Rotas das Vertentes</a>';
-		$markup .= '<a id="japumap-toggle-full-screen"><span class="return-text">disable fullscreen and return to our site</span><span class="toggle-full-screen-text">tela cheia</span></a>';
+		$markup .= '<a id="japumap-toggle-full-screen"><span class="return-text">sair da tela cheia e voltar ao site</span><span class="toggle-full-screen-text">tela cheia</span></a>';
 		$markup .= '</p>';
 		$markup .= '</div>';
 		$markup .= '</div>';
 
-		// adiciona $markup após $content
+		// adiciona $markup após $content.
 		$content .= $markup;
 
-		// retorn $content
+		// retorn $content.
 		return $content;
 	}
 
-	// prioridade alta para ser usada após outros plugins também filtrarem o conteúdo
+	// prioridade alta para ser usada após outros plugins também filtrarem o conteúdo.
 	add_filter( 'the_content', 'cbtpl_add_japu_map', 100 );
 
 	/**
 	 * Adiciona os estilos e scripts customizados.
 	 *
-	 * Adiciona os estilos e scripts customizados de nosso plugin
+	 * Adiciona os estilos e scripts customizados de nosso plugin.
 	 *
 	 * @since  0.1.0
 	 * @return void
@@ -179,11 +180,12 @@ if ( ! is_admin() ) {
 	function cbtpl_ativos_publicos() {
 
 		// Registra e coloca na fila nosso estilo customizado.
-		wp_register_style( 'cbtpl-style', CBTPL_PLUGIN_PATH . '/includes/styles/cbtpl-style.css' , array(), CBTPL_PLUGIN_VERSION, 'all' );
+		wp_register_style( 'cbtpl-style', plugin_dir_url( __FILE__ ) . 'includes/styles/cbtpl-style.css' , array(), CBTPL_PLUGIN_VERSION, 'all' );
 		wp_enqueue_style( 'cbtpl-style' );
 
 		// Registra e coloca na fila nosso script customizado.
-		wp_register_script( 'cbtpl-script', CBTPL_PLUGIN_PATH . '/includes/js/cbtpl-script.js' , array(), CBTPL_PLUGIN_VERSION, true );
+		// TODO: condicional para single e page.
+		wp_register_script( 'cbtpl-script', plugin_dir_url( __FILE__ ) . 'includes/js/cbtpl-script.js' , array(), CBTPL_PLUGIN_VERSION, true );
 		wp_enqueue_script( 'cbtpl-script' );
 	}
 	add_action( 'wp_enqueue_scripts', 'cbtpl_ativos_publicos' );

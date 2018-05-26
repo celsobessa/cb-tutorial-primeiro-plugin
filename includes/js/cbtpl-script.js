@@ -2,7 +2,8 @@
 /**
  * Inicializa o Mapa Japu.
  *
- * Inicializa o Mapa Japu, ouvindo cliques para deixá-lo em tela cheia.
+ * Inicializa o Mapa Japu, ouvindo cliques para deixá-lo em tela cheia. Adaptado do
+ * plugin oficial do Japu (veja https://github.com/2aces/japu-map-embedder/).
  *
  * @since  0.1.0
  * @return void
