@@ -1,0 +1,2 @@
+- As informações em português estão no arquivo [README.md](README.md)
+- English information at [README-EN.md](README-EN.md)
