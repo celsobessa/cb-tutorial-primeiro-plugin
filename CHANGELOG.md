@@ -15,7 +15,12 @@ This project adheres to [Semantic Versioning](http://semver.org/)
 - localization
 - conditional script loading for single post and pages
 
-## 0.1.0 [2018-05-26]
+## 0.1.1 - [2018-06-07]
+
+### Added
+- ISSUE_TEMPLATE.md and PULL_REQUEST_TEMPLATE.md files to encourage contribution
+
+## 0.1.0 - [2018-05-26]
 
 ### Added
 - Limit author, contributor and subscriber user access to admin area
